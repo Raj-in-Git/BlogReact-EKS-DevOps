@@ -1,0 +1,31 @@
+﻿apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: blogreact-dev
+  region: ap-south-1
+  version: "1.35"
+
+iam:
+  withOIDC: true
+  vpcResourceControllerPolicy: true
+
+managedNodeGroups:
+  - name: blogreact-workers
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 2
+    privateNetworking: false
+    volumeSize: 20
+    volumeType: gp3
+    disableIMDSv1: true
+
+vpc:
+  nat:
+    gateway: Disable
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+  publicAccessCIDRs:
+    - "27.60.175.123/32"
